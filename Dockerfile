@@ -3,7 +3,7 @@ FROM dockette/debian:sid
 MAINTAINER Milan Sulc <sulcmil@gmail.com>
 
 RUN apt-get update && \
-	apt-get install -y varnish && \
+    apt-get install -y varnish && \
     apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
 
