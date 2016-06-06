@@ -14,7 +14,7 @@ ENV VARNISH_CACHE 256m
 ENV VARNISH_PORT 80
 
 # Varnish configuration
-ADD ./default.vcl $VARNISH_CONFIG
+ADD ./varnish/default.vcl $VARNISH_CONFIG
 
 # Entrypoint
 ADD ./entrypoint.sh /entrypoint.sh
