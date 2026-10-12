@@ -2,7 +2,7 @@
 
 ## Project
 
-Dockette Varnish builds `dockette/varnish`, a legacy Varnish Cache image for older Dockette stacks. It installs Varnish on top of `dockette/debian:sid`, copies `varnish/default.vcl` to `/etc/varnish/default.vcl`, and starts through `/entrypoint.sh`.
+Dockette Varnish builds `dockette/varnish`, a legacy Varnish Cache image for older Dockette stacks. It installs Varnish on top of `debian:trixie-slim`, copies `varnish/default.vcl` to `/etc/varnish/default.vcl`, and starts through `/entrypoint.sh`.
 
 ## Images
 

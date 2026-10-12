@@ -249,8 +249,8 @@ sub vcl_hit {
       #set req.http.grace = "normal(limited)";
       return (deliver);
     } else {
-      # No candidate for grace. Fetch a fresh object.
-      return(fetch);
+      # No candidate for grace. Fetch a fresh object (return(fetch) was removed in Varnish 6+).
+      return (pass);
     }
   } else {
     # backend is sick - use full grace
@@ -259,12 +259,12 @@ sub vcl_hit {
       return (deliver);
     } else {
       # no graced object.
-      return (fetch);
+      return (pass);
     }
   }
 
-  # fetch & deliver once we get the result
-  return (fetch); # Dead code, keep as a safeguard
+  # no usable object, fetch a fresh one without caching it
+  return (pass); # Dead code, keep as a safeguard
 }
 
 sub vcl_miss {
