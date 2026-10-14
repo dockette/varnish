@@ -1,6 +1,6 @@
-FROM dockette/debian:sid
+FROM debian:trixie-slim
 
-MAINTAINER Milan Sulc <sulcmil@gmail.com>
+LABEL maintainer="Milan Sulc <sulcmil@gmail.com>"
 
 RUN apt-get update && \
     apt-get install -y varnish && \
@@ -8,10 +8,10 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
 
 # Varnish variables
-ENV VARNISH_SECRET /etc/varnish/secret
-ENV VARNISH_CONFIG /etc/varnish/default.vcl
-ENV VARNISH_CACHE 256m
-ENV VARNISH_PORT 80
+ENV VARNISH_SECRET=/etc/varnish/secret
+ENV VARNISH_CONFIG=/etc/varnish/default.vcl
+ENV VARNISH_CACHE=256m
+ENV VARNISH_PORT=80
 
 # Varnish configuration
 ADD ./varnish/default.vcl $VARNISH_CONFIG
