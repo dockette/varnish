@@ -11,7 +11,7 @@ test:
 	docker run --rm ${DOCKER_IMAGE}:${DOCKER_TAG} varnishd -V
 	docker run --rm ${DOCKER_IMAGE}:${DOCKER_TAG} test -x /entrypoint.sh
 	docker run --rm ${DOCKER_IMAGE}:${DOCKER_TAG} test -f /etc/varnish/default.vcl
-	docker run --rm ${DOCKER_IMAGE}:${DOCKER_TAG} varnishd -C -f /etc/varnish/default.vcl
+	docker run --rm --add-host app:127.0.0.1 ${DOCKER_IMAGE}:${DOCKER_TAG} varnishd -C -f /etc/varnish/default.vcl
 
 .PHONY: run
 run:

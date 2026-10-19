@@ -250,7 +250,7 @@ sub vcl_hit {
       return (deliver);
     } else {
       # No candidate for grace. Fetch a fresh object.
-      return(fetch);
+      return (pass);
     }
   } else {
     # backend is sick - use full grace
@@ -259,12 +259,12 @@ sub vcl_hit {
       return (deliver);
     } else {
       # no graced object.
-      return (fetch);
+      return (pass);
     }
   }
 
   # fetch & deliver once we get the result
-  return (fetch); # Dead code, keep as a safeguard
+  return (pass); # Dead code, keep as a safeguard
 }
 
 sub vcl_miss {
