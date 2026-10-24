@@ -48,12 +48,19 @@ This repository intentionally preserves the historical image behavior. The entry
 
 The CI smoke test focuses on build viability, Varnish version output, entrypoint presence, bundled config presence, and VCL compilation.
 
+## Versions
+
+The release version is the date in [`VERSION`](VERSION). CI pushes `latest` also as `dockette/varnish:<VERSION>`.
+To release, run `make release`, commit and push to `master`.
+
 ## Development
 
 ```bash
 make build
 make test
 make run
+make version
+make release
 ```
 
 `make run` starts a temporary backend as `app:80` for the bundled VCL.
