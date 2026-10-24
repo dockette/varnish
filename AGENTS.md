@@ -32,3 +32,4 @@ Dockette Varnish builds `dockette/varnish`, a legacy Varnish Cache image for old
 - Place `.PHONY: <target>` directly above each Makefile target.
 - Keep README badges and maintenance sections consistent with other Dockette image repos.
 - Do not introduce unrelated modernization or runtime behavior changes.
+- `VERSION` is the release date; `make release` bumps it. CI pushes `latest` also as `<VERSION>` and creates the GitHub release.
