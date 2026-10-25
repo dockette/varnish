@@ -10,7 +10,7 @@ Dockette Varnish builds `dockette/varnish`, a legacy Varnish Cache image for old
 - Build context: repository root `.` with `Dockerfile`, `entrypoint.sh`, and `varnish/default.vcl`.
 - Default backend expected by the bundled VCL: `app:80`.
 - Default exposed runtime behavior: Varnish listens on port `80` and `varnishlog` keeps the container attached.
-- GitHub Actions builds `linux/amd64` for tests, then publishes `linux/amd64,linux/arm64` through the shared Dockette Docker workflow on `master` and the weekly schedule.
+- GitHub Actions builds `linux/amd64` for tests, then builds `linux/amd64,linux/arm64` in one inline build job. Only `master` and the weekly schedule push to Docker Hub.
 
 ## Commands
 
@@ -32,4 +32,4 @@ Dockette Varnish builds `dockette/varnish`, a legacy Varnish Cache image for old
 - Place `.PHONY: <target>` directly above each Makefile target.
 - Keep README badges and maintenance sections consistent with other Dockette image repos.
 - Do not introduce unrelated modernization or runtime behavior changes.
-- `VERSION` is the release date; `make release` bumps it. CI pushes `latest` also as `<VERSION>` and creates the GitHub release.
+- `VERSION` holds the release date as `VERSION=YYYY.MM.DD`; `make release` sets it. CI pushes `latest` also as `<VERSION>` and creates the GitHub release.
