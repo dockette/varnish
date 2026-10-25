@@ -13,58 +13,57 @@
 
 -----
 
+Legacy [Varnish Cache](https://varnish-cache.org) image with the bundled `default.vcl` and the entrypoint used by older
+Dockette stacks. It keeps the historical behavior on purpose.
+
+## Features
+
+- Varnish on `dockette/debian:trixie`, listening on port `80`
+- Bundled `default.vcl` that expects the backend application as `app:80`
+- The entrypoint starts `varnishd` with the bundled VCL and then follows `varnishlog`
+- No modern healthcheck, init wrapper or generated runtime configuration
+
 ## Usage
 
-```bash
-docker run --rm -it \
-  -p 80:80 \
-  --link app:app \
-  dockette/varnish:latest
+```sh
+docker run --rm -it -p 80:80 --link app:app dockette/varnish:latest
 ```
 
-The bundled VCL expects the backend application to be reachable as `app:80`.
+```sh
+# Custom VCL, when the default backend or caching rules do not fit your stack
+docker run --rm -it -p 80:80 -v "$(pwd)/default.vcl:/etc/varnish/default.vcl:ro" dockette/varnish:latest
+```
 
 ## Configuration
 
-The image keeps the original legacy defaults:
+Defaults of the legacy image:
 
 - `VARNISH_SECRET=/etc/varnish/secret`
 - `VARNISH_CONFIG=/etc/varnish/default.vcl`
 - `VARNISH_CACHE=256m`
 - `VARNISH_PORT=80`
 
-Mount a custom VCL file when the default backend or caching rules do not fit your stack:
-
-```bash
-docker run --rm -it \
-  -p 80:80 \
-  -v "$(pwd)/default.vcl:/etc/varnish/default.vcl:ro" \
-  dockette/varnish:latest
-```
-
-## Legacy Constraints
-
-This repository intentionally preserves the historical image behavior. The entrypoint starts `varnishd` with the bundled VCL and then follows `varnishlog`; it does not provide a modern healthcheck, init wrapper, or generated runtime configuration.
-
-The CI smoke test focuses on build viability, Varnish version output, entrypoint presence, bundled config presence, and VCL compilation.
-
 ## Versions
 
-The release version is the date in [`VERSION`](VERSION). CI pushes `latest` also as `dockette/varnish:<VERSION>`.
-To release, run `make release`, commit and push to `master`.
+| Version | Release |
+|---------|---------|
+| `dockette/varnish:YYYY.MM.DD` | release `YYYY.MM.DD` |
+| `dockette/varnish:latest` | latest build of `master` |
+
+All versions build on `dockette/debian:trixie`. Releases are listed on
+[GitHub](https://github.com/dockette/varnish/releases).
 
 ## Development
 
-```bash
-make build
-make test
-make run
-make version
-make release
+```sh
+make build          # build linux/amd64 and linux/arm64
+make test           # check varnishd, entrypoint, bundled config and VCL compilation
+make run            # run on port 80 with a temporary nginx backend as app:80
+make version        # print VERSION
+make release        # set today's date in VERSION
 ```
-
-`make run` starts a temporary backend as `app:80` for the bundled VCL.
 
 ## Maintenance
 
-See [how to contribute](https://github.com/dockette/.github/blob/master/CONTRIBUTING.md) to this package. Consider to [support](https://github.com/sponsors/f3l1x) **f3l1x**. Thank you for using this package.
+See [how to contribute](https://github.com/dockette/.github/blob/master/CONTRIBUTING.md) to this package. Consider to
+[support](https://github.com/sponsors/f3l1x) **f3l1x**. Thank you for using this package.
